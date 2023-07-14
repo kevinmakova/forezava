@@ -1,0 +1,56 @@
+<?php
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $message = $_POST["message"];
+    
+    // Validate the form data (you can add more validation as needed)
+    if (empty($name) || empty($email) || empty($message)) {
+        $error = "Please fill in all fields.";
+    } else {
+        // Set the recipient email address
+        $to = "your-email@example.com";
+        
+        // Set the email subject
+        $subject = "New Message from Website Contact Form";
+        
+        // Set the email headers
+        $headers = "From: $name <$email>" . "\r\n";
+        
+        // Send the email
+        if (mail($to, $subject, $message, $headers)) {
+            $success = "Your message has been sent successfully!";
+        } else {
+            $error = "Oops! Something went wrong. Please try again.";
+        }
+    }
+}
+?>
+
+<!-- HTML form -->
+<form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+    </div>
+    <div>
+        <input type="submit" value="Send">
+    </div>
+</form>
+
+<!-- Display success or error message -->
+<?php if (isset($success)): ?>
+    <p class="success"><?php echo $success; ?></p>
+<?php elseif (isset($error)): ?>
+    <p class="error"><?php echo $error; ?></p>
+<?php endif; ?>
