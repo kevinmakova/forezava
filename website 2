@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Climate Smart & Conservation Agriculture Training</title>
+    <!-- Add CSS stylesheets and JavaScript files here -->
+</head>
+<body>
+    <header>
+        <h1>Welcome to Climate Smart & Conservation Agriculture Training</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="topics.php">Topics</a></li>
+            <li><a href="case_studies.php">Case Studies</a></li>
+            <li><a href="resources.php">Resources</a></li>
+            <li><a href="contact.php">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <?php
+        // Check if a specific page is requested and include the corresponding PHP file
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+            $page = basename($page); // Prevent directory traversal
+            $page = "pages/" . $page . ".php"; // Assuming pages are stored in a "pages" directory
+
+            if (file_exists($page)) {
+                include $page;
+            } else {
+                include "pages/404.php"; // Include a 404 page if the requested page doesn't exist
+            }
+        } else {
+            include "pages/home.php"; // Default to the home page
+        }
+        ?>
+    </main>
+
+    <footer>
+        <p>&copy; <?php echo date('Y'); ?> Climate Smart & Conservation Agriculture Training</p>
+    </footer>
+</body>
+</html>
